@@ -1,3 +1,4 @@
+@tag
 Feature: Title of feature
 
     As an API client I can request my api

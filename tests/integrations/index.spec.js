@@ -3,9 +3,9 @@ const fs = require("fs");
 const path = require("path");
 
 describe("prettier-plugin-gherkin", () => {
-  it("format `basic.feature` file", () => {
+  it("Format a feature file with margin errors", () => {
     const fixtureFeatureFile = fs.readFileSync(
-      path.join(__dirname, "__fixtures__/basic.feature"),
+      path.join(__dirname, "__fixtures__/basic_margin_errors.feature"),
       { encoding: "utf-8" },
     );
 
@@ -15,10 +15,11 @@ describe("prettier-plugin-gherkin", () => {
   describe("Feature:", () => {
     it("should preserve a long feature title in one line", () => {
       const fixture = `Feature: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`;
-
-      expect(format(fixture)).toMatchInlineSnapshot(
-        `"Feature: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."`,
-      );
+      console.log(format(fixture) + "end");
+      expect(format(fixture)).toMatchInlineSnapshot(`
+        "Feature: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        "
+      `);
     });
 
     it("should break in multiple line a long feature description", () => {
@@ -28,11 +29,11 @@ describe("prettier-plugin-gherkin", () => {
 
       expect(format(fixture)).toMatchInlineSnapshot(`
 "Feature: Lorem ipsum dolor sit amet
-
   Placerat duis ultricies lacus sed turpis tincidunt id aliquet. Id faucibus
   nisl tincidunt eget nullam non. Sapien faucibus et molestie ac feugiat sed
   lectus vestibulum mattis. Et tortor consequat id porta nibh venenatis cras sed
-  felis. Felis eget velit aliquet sagittis id consectetur."
+  felis. Felis eget velit aliquet sagittis id consectetur.
+"
 `);
     });
 
@@ -47,11 +48,11 @@ describe("prettier-plugin-gherkin", () => {
 
       expect(format(fixture)).toMatchInlineSnapshot(`
 "Feature: Lorem ipsum dolor sit amet
-
   Placerat duis ultricies lacus sed turpis tincidunt id aliquet. Id faucibus
   nisl tincidunt eget nullam non. Sapien faucibus et molestie ac feugiat sed
   lectus vestibulum mattis. Et tortor consequat id porta nibh venenatis cras sed
-  felis. Felis eget velit aliquet sagittis id consectetur."
+  felis. Felis eget velit aliquet sagittis id consectetur.
+"
 `);
     });
 
@@ -62,8 +63,8 @@ Placerat duis ultricies
 
       expect(format(fixture)).toMatchInlineSnapshot(`
 "Feature: Lorem ipsum dolor sit amet
-
-  Placerat duis ultricies"
+  Placerat duis ultricies
+"
 `);
     });
   });
@@ -71,13 +72,15 @@ Placerat duis ultricies
   describe("Scenario:", () => {
     it("should preserve a long scenario title in one line", () => {
       const fixture = `Feature: Some feature
+      
   Scenario: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 `;
 
       expect(format(fixture)).toMatchInlineSnapshot(`
 "Feature: Some feature
 
-  Scenario: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+  Scenario: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+"
 `);
     });
 
@@ -91,8 +94,9 @@ Placerat duis ultricies
 "Feature: Some feature title
 
   Scenario: Some scenario title
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua."
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+  incididunt ut labore et dolore magna aliqua.
+"
 `);
     });
 
@@ -106,7 +110,8 @@ Placerat duis ultricies
 "Feature: Some feature title
 
   Scenario: Some scenario title
-    Lorem ipsum dolor sit amet."
+  Lorem ipsum dolor sit amet.
+"
 `);
     });
 
@@ -120,7 +125,8 @@ Placerat duis ultricies
 "Feature: Some feature title
 
   Example: Some scenario title
-    Lorem ipsum dolor sit amet."
+  Lorem ipsum dolor sit amet.
+"
 `);
     });
   });
@@ -148,7 +154,8 @@ Placerat duis ultricies
     When step d
     Then step e
     And step f
-    But step g"
+    But step g
+"
 `);
     });
 
@@ -162,7 +169,8 @@ Placerat duis ultricies
 "Feature: Some feature title
 
   Scenario: Some scenario title
-    Given lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+    Given lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
+"
 `);
     });
   });
@@ -192,7 +200,8 @@ Feature: Lorem ipsum dolor sit amet
 
       expect(format(fixture)).toMatchInlineSnapshot(`
 "@important @ui
-Feature: Lorem ipsum dolor sit amet"
+Feature: Lorem ipsum dolor sit amet
+"
 `);
     });
 
@@ -205,8 +214,9 @@ Feature: Lorem ipsum dolor sit amet"
       expect(format(fixture)).toMatchInlineSnapshot(`
 "Feature: Lorem ipsum dolor sit amet
 
-  @important @ui
-  Scenario: Id faucibus nisl tincidunt eget nullam non"
+@important @ui
+  Scenario: Id faucibus nisl tincidunt eget nullam non
+"
 `);
     });
 
@@ -219,8 +229,9 @@ Example: Id faucibus nisl tincidunt eget nullam non
       expect(format(fixture)).toMatchInlineSnapshot(`
 "Feature: Lorem ipsum dolor sit amet
 
-  @important @ui
-  Example: Id faucibus nisl tincidunt eget nullam non"
+@important @ui
+  Example: Id faucibus nisl tincidunt eget nullam non
+"
 `);
     });
 
@@ -235,7 +246,8 @@ Feature: Lorem ipsum dolor sit amet
 
       expect(format(fixture)).toMatchInlineSnapshot(`
 "# Some comment
-Feature: Lorem ipsum dolor sit amet"
+Feature: Lorem ipsum dolor sit amet
+"
 `);
     });
 

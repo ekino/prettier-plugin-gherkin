@@ -8,7 +8,7 @@
     "/src"
   ],
   "scripts": {
-    "test": "jest ./tests/integrations/new.spec.js",
+    "test": "jest ./tests/integrations/index.spec.js",
     "lint": "eslint .",
     "format:check": "prettier --check \"./**/*.{js,json,md}\"",
     "format:fix": "prettier --write \"./**/*.{js,json,md}\""
