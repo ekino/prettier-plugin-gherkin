@@ -1,0 +1,31 @@
+{
+  "name": "prettier-plugin-gherkin",
+  "version": "0.0.1",
+  "description": "A prettier plugin to format gherkin language (aka `.feature` files)",
+  "license": "MIT",
+  "main": "src/index.js",
+  "files": [
+    "/src"
+  ],
+  "scripts": {
+    "test": "jest ./tests/integrations/new.spec.js",
+    "lint": "eslint .",
+    "format:check": "prettier --check \"./**/*.{js,json,md}\"",
+    "format:fix": "prettier --write \"./**/*.{js,json,md}\""
+  },
+  "dependencies": {
+    "npm-run-path": "^4.0.0",
+    "prettier": "1.19.1",
+    "read-json-lines-sync": "^2.0.2"
+  },
+  "bin": {
+    "gherkingo": "gherk-go"
+  },
+  "devDependencies": {
+    "@types/prettier": "1.19.0",
+    "eslint": "6.8.0",
+    "eslint-plugin-jest": "23.7.0",
+    "jest": "25.1.0",
+    "jest-watch-typeahead": "0.4.2"
+  }
+}
