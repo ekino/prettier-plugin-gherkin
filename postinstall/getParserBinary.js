@@ -17,7 +17,7 @@ exports.getBinary = () => {
   const platform = getPlatform();
   const version = require('../package.json').version;
   const url = `https://github.com/ekino/prettier-plugin-gherkin/releases/download/v${ version }/gherkingo-${platform}.tar.gz`;
-  const name = 'my-program';
+  const name = 'gherkingo';
   return new Binary(url, { name });
 }
 

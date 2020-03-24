@@ -14,6 +14,17 @@ describe("parseGherkin", () => {
     expect(ast).toMatchSnapshot();
   });
 
+  it("parse feature file with data tables into an AST", () => {
+    const basicFeature = fs.readFileSync(
+      path.join(__dirname, "__fixtures__/with_data_tables.feature"),
+      { encoding: "utf-8" },
+    );
+
+    const ast = parseGherkin(basicFeature);
+
+    expect(ast).toMatchSnapshot();
+  });
+
   it("should throw an exception when the is a syntax error", () => {
     const fixture = `Scenario: foo`; // No "Feature:" header
 

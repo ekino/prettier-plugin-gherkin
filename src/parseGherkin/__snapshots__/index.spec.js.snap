@@ -55,6 +55,158 @@ Array [
 ]
 `;
 
+exports[`parseGherkin parse feature file with data tables into an AST 1`] = `
+Array [
+  Object {
+    "description": "  As an API client I can request my api",
+    "keyword": "Feature",
+    "language": "en",
+    "location": Object {
+      "column": 1,
+      "line": 2,
+    },
+    "name": "Title of feature",
+    "tags": Array [
+      Object {
+        "location": Object {
+          "column": 1,
+          "line": 1,
+        },
+        "name": "@tag",
+      },
+    ],
+    "type": "feature",
+  },
+  Object {
+    "location": Object {
+      "column": 1,
+      "line": 6,
+    },
+    "text": "  #Comment",
+    "type": "comment",
+  },
+  Object {
+    "description": null,
+    "keyword": "Scenario",
+    "location": Object {
+      "column": 3,
+      "line": 7,
+    },
+    "name": "Query on API, with success response",
+    "tags": Array [],
+    "type": "scenario",
+  },
+  Object {
+    "keyword": "Given ",
+    "location": Object {
+      "column": 5,
+      "line": 9,
+    },
+    "text": "I load test data files",
+    "type": "step",
+  },
+  Object {
+    "location": Object {
+      "column": 7,
+      "line": 10,
+    },
+    "rows": Array [
+      Object {
+        "cells": Array [
+          Object {
+            "location": Object {
+              "column": 9,
+              "line": 10,
+            },
+            "maxLength": 22,
+            "type": "cell",
+            "value": "path",
+          },
+          Object {
+            "location": Object {
+              "column": 34,
+              "line": 10,
+            },
+            "maxLength": 5,
+            "type": "cell",
+            "value": "type",
+          },
+        ],
+        "location": Object {
+          "column": 7,
+          "line": 10,
+        },
+        "type": "row",
+      },
+      Object {
+        "cells": Array [
+          Object {
+            "location": Object {
+              "column": 9,
+              "line": 11,
+            },
+            "maxLength": 22,
+            "type": "cell",
+            "value": "data/mocks/data.json",
+          },
+          Object {
+            "location": Object {
+              "column": 34,
+              "line": 11,
+            },
+            "maxLength": 5,
+            "type": "cell",
+            "value": "mocks",
+          },
+        ],
+        "location": Object {
+          "column": 7,
+          "line": 11,
+        },
+        "type": "row",
+      },
+      Object {
+        "cells": Array [
+          Object {
+            "location": Object {
+              "column": 9,
+              "line": 12,
+            },
+            "maxLength": 22,
+            "type": "cell",
+            "value": "data/redis/tokens.json",
+          },
+          Object {
+            "location": Object {
+              "column": 34,
+              "line": 12,
+            },
+            "maxLength": 5,
+            "type": "cell",
+            "value": "redis",
+          },
+        ],
+        "location": Object {
+          "column": 7,
+          "line": 12,
+        },
+        "type": "row",
+      },
+    ],
+    "type": "dataTable",
+  },
+  Object {
+    "keyword": "When ",
+    "location": Object {
+      "column": 5,
+      "line": 13,
+    },
+    "text": "I GET /api/v2/route",
+    "type": "step",
+  },
+]
+`;
+
 exports[`parseGherkin should parse comments 1`] = `
 Array [
   Object {

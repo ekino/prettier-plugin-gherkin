@@ -15,7 +15,6 @@ describe("prettier-plugin-gherkin", () => {
   describe("Feature:", () => {
     it("should preserve a long feature title in one line", () => {
       const fixture = `Feature: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`;
-      console.log(format(fixture) + "end");
       expect(format(fixture)).toMatchInlineSnapshot(`
         "Feature: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         "
@@ -176,8 +175,50 @@ Placerat duis ultricies
   });
 
   describe("Step Arguments", () => {
-    describe("Doc Strings", () => {});
-    describe("Data Tables", () => {});
+    it.todo("Should handle Doc Strings");
+    describe("Data Tables", () => {
+      it("should preserve rows and columns", () => {
+        const fixture = `Feature: Some feature title
+  Scenario: Some scenario title
+    And json response should match
+      | field      | matcher | value                                            |
+      | data.title | match   | Small                                            |
+      | data.URL   | equal   | url                                              |
+`;
+
+        expect(format(fixture)).toMatchInlineSnapshot(`
+"Feature: Some feature title
+
+  Scenario: Some scenario title
+    And json response should match
+    | field     | matcher| value|
+    | data.title| match  | Small|
+    | data.URL  | equal  | url  |
+"
+`);
+      });
+
+      it("should assign the column identation to the longest word in each column", () => {
+        const fixture = `Feature: Some feature title
+  Scenario: Some scenario title
+    And json response should match
+      | field      | matcher | value                   |
+      | data.longTitle | match   | long valueeeeee|
+      | data.URL   | equal   | url|
+`;
+
+        expect(format(fixture)).toMatchInlineSnapshot(`
+"Feature: Some feature title
+
+  Scenario: Some scenario title
+    And json response should match
+    | field         | matcher| value          |
+    | data.longTitle| match  | long valueeeeee|
+    | data.URL      | equal  | url            |
+"
+`);
+      });
+    });
   });
 
   describe("Rule:", () => {

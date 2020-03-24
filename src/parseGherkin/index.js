@@ -46,7 +46,7 @@ const buildGherkinDocument = text => {
   );
 
   if (!gherkinDocument && attachementDocument) {
-    const {line, column} = attachementDocument.attachment.source.location
+    const { line, column } = attachementDocument.attachment.source.location;
     throw new GherkinSyntaxError(attachementDocument.attachment.text, line, column, text);
   }
   return gherkinDocument.gherkinDocument;
@@ -82,7 +82,7 @@ const parseDataTable = table => {
   return {
     type: "dataTable",
     rows: table.rows.map(r => ({
-      ...r,
+      location: r.location,
       type: "row",
       cells: r.cells.map((c, i) => ({
         ...c,
@@ -119,9 +119,9 @@ const flattenAst = (nodes, oneNode) => {
       description: feature.description || null,
       tags: feature.tags
         ? feature.tags.map(oneNodeTag => ({
-            name: oneNodeTag.name,
-            location: oneNodeTag.location,
-          }))
+          name: oneNodeTag.name,
+          location: oneNodeTag.location,
+        }))
         : [],
       language: feature.language,
       location: feature.location,
@@ -139,9 +139,9 @@ const flattenAst = (nodes, oneNode) => {
       description: scenario.description || null,
       tags: scenario.tags
         ? scenario.tags.map(oneNodeTag => ({
-            name: oneNodeTag.name,
-            location: oneNodeTag.location,
-          }))
+          name: oneNodeTag.name,
+          location: oneNodeTag.location,
+        }))
         : [],
       location: scenario.location,
     });
@@ -149,38 +149,6 @@ const flattenAst = (nodes, oneNode) => {
     if (scenario.steps && scenario.steps.length > 0) {
       result = result.concat(...scenario.steps.reduce(flattenAst, []));
     }
-  } else if (oneNode.keyword === "dataTable") {
-    // parse table column headers
-    const columns = oneNode.rows[0].cells.map(cell => ({
-      header: cell.value,
-      maxLength: 0,
-    }));
-    // for each column we gather the maximum length by parsing all the rows
-    for (const row of oneNode.rows) {
-      for (const [i, column] of columns.entries()) {
-        if (
-          row.cells[i].value &&
-          row.cells[i].value.length > column.maxLength
-        ) {
-          column.maxLength = row.cells[i].value.length;
-        }
-      }
-    }
-    result.push({
-      type: "dataTable",
-      keyword: oneNode.keyword,
-      rows: oneNode.rows.map(r => ({
-        ...r,
-        type: "row",
-        cells: r.cells.map((c, i) => ({
-          ...c,
-          type: "cell",
-          maxLength: columns[i].maxLength,
-          value: c.value || "",
-        })),
-      })),
-      location: oneNode.location,
-    });
   } else if (oneNode.keyword && isStepKeyword(oneNode.keyword)) {
     result.push({
       type: "step",
