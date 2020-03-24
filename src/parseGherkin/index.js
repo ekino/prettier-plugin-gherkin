@@ -46,7 +46,8 @@ const buildGherkinDocument = text => {
   );
 
   if (!gherkinDocument && attachementDocument) {
-    throw new GherkinSyntaxError(attachementDocument.attachment.data, text);
+    const {line, column} = attachementDocument.attachment.source.location
+    throw new GherkinSyntaxError(attachementDocument.attachment.text, line, column, text);
   }
   return gherkinDocument.gherkinDocument;
 };

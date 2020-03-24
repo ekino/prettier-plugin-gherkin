@@ -1,15 +1,28 @@
-on: push
+name: Node.js CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 jobs:
   build:
-    name: Validate code changes
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
     steps:
       - uses: actions/checkout@master
-      - uses: actions/setup-node@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          node-version: "12.x"
-      - run: yarn install --frozen-lockfile
-      - run: yarn run lint
-      - run: yarn run format:check
-      - run: yarn link
-      - run: yarn run test
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Lint project
+        run: yarn lint
+      - name: Prettier check project
+        run: yarn lint format:check
+      - run: yarn link # TODO: remove when dynamic binary download is implemented
+      - name: Run test suite
+        run: yarn run test
