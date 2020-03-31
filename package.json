@@ -12,7 +12,8 @@
     "coverage": "jest --coverage ./tests/integrations/** ./src/**/**.spec.js",
     "lint": "eslint .",
     "format:check": "prettier --check \"./**/*.{js,json,md}\"",
-    "format:fix": "prettier --write \"./**/*.{js,json,md}\""
+    "format:fix": "prettier --write \"./**/*.{js,json,md}\"",
+    "postinstall": "node ./postinstall/getParserBinary.js"
   },
   "dependencies": {
     "binary-install": "^0.0.1",

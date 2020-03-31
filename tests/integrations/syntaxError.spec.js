@@ -4,7 +4,9 @@ const path = require("path"); */
 
 describe("prettier-plugin-gherkin", () => {
   // TODO: fix error handling
-  it.todo("will thrown a error on feature file with syntax error") /*, () => {
+  it.todo(
+    "will thrown a error on feature file with syntax error",
+  ); /*, () => {
     const fixtureFeatureFile = fs.readFileSync(
       path.join(__dirname, "__fixtures__/errored-missing-scenario.feature"),
       { encoding: "utf-8" }

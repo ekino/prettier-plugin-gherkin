@@ -1,23 +1,34 @@
-const { Binary } = require('binary-install')
-const os = require('os')
+const { Binary } = require("binary-install");
+const os = require("os");
 
 const getPlatform = () => {
   const type = os.type();
   const arch = os.arch();
 
-  if (type === 'Windows_NT' && arch === 'x64') return 'win64';
-  if (type === 'Windows_NT') return 'win32';
-  if (type === 'Linux' && arch === 'x64') return 'linux';
-  if (type === 'Darwin' && arch === 'x64') return 'macos';
+  if (type === "Windows_NT") {
+    return `windows-${arch}`;
+  }
+  if (type === "Linux") {
+    return `linux-${arch}`;
+  }
+  if (type === "Darwin") {
+    return `darwin-amd64`;
+  }
 
   throw new Error(`Unsupported platform: ${type} ${arch}`);
-}
+};
 
-exports.getBinary = () => {
+const getBinary = async () => {
   const platform = getPlatform();
-  const version = require('../package.json').version;
-  const url = `https://github.com/ekino/prettier-plugin-gherkin/releases/download/v${ version }/gherkingo-${platform}.tar.gz`;
-  const name = 'gherkingo';
-  return new Binary(url, { name });
-}
+  console.log("Platform : ", platform);
+  const url = `https://github.com/ekino/prettier-plugin-gherkin/releases/download/0.0.1/cucumber-${platform}.tar.gz`;
+  const name = "gherkingo";
+  const binary = new Binary(url, { name, installDirectory: "postinstall" });
+  return binary.install();
+};
 
+try {
+  getBinary();
+} catch (e) {
+  console.error("Something went wrong : ", e);
+}

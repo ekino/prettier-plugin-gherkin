@@ -47,7 +47,12 @@ const buildGherkinDocument = text => {
 
   if (!gherkinDocument && attachementDocument) {
     const { line, column } = attachementDocument.attachment.source.location;
-    throw new GherkinSyntaxError(attachementDocument.attachment.text, line, column, text);
+    throw new GherkinSyntaxError(
+      attachementDocument.attachment.text,
+      line,
+      column,
+      text,
+    );
   }
   return gherkinDocument.gherkinDocument;
 };
@@ -119,9 +124,9 @@ const flattenAst = (nodes, oneNode) => {
       description: feature.description || null,
       tags: feature.tags
         ? feature.tags.map(oneNodeTag => ({
-          name: oneNodeTag.name,
-          location: oneNodeTag.location,
-        }))
+            name: oneNodeTag.name,
+            location: oneNodeTag.location,
+          }))
         : [],
       language: feature.language,
       location: feature.location,
@@ -139,9 +144,9 @@ const flattenAst = (nodes, oneNode) => {
       description: scenario.description || null,
       tags: scenario.tags
         ? scenario.tags.map(oneNodeTag => ({
-          name: oneNodeTag.name,
-          location: oneNodeTag.location,
-        }))
+            name: oneNodeTag.name,
+            location: oneNodeTag.location,
+          }))
         : [],
       location: scenario.location,
     });
